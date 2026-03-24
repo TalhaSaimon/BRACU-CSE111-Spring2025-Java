@@ -1,0 +1,303 @@
+
+
+public class Person{
+  public String name;
+  public int age;
+  public String type;
+  public boolean dose1=false;
+  public boolean dose2=false;
+  public Vaccine  c;
+  public Person(String s1,int n1,String s2){
+    name=s1;
+    age=n1;
+    type=s2;
+  }
+   public Person(String s1,int n1){
+    name=s1;
+    age=n1;
+  }
+  public void pushVaccine(Vaccine v){
+    if(dose1==false){
+      if(type.equals("Student")){
+      dose1 =true;
+      System.out.println("1st dose done for "+name);
+      c=v;
+      }
+      else if(age>=25){
+        dose1 =true;
+        System.out.println("1st dose done for "+name);
+        c=v;
+      }
+      else{
+        System.out.println("Sorry "+name+", Minimum age for taking vaccines is 25 years now.");
+      }
+    }
+  }
+  public void pushVaccine(Vaccine v,String s){
+    if(s.equals("1st Dose") && dose1==false){
+      pushVaccine(v);
+    }
+    else if(dose1){
+      System.out.println("Sorry "+name+", invalid dose request.");
+    }
+    else if(dose2){
+      System.out.println("Sorry "+name+", you already received both doses.");
+    }
+    else{
+      if(c.getName().equals(v.getName())){
+        dose2 =true;
+        System.out.println("2nd dose done for "+name);
+      }
+      else{
+        System.out.println("Sorry "+name+", you can’t take 2 different vaccines");
+      }
+      
+    }
+  }
+  public void showDetail(){
+    String s1="";
+    String s2="";
+    if(dose1){
+      s1="Given";
+      if(dose2){
+      s2="Given";
+      }
+      else{
+        s2 ="Please come after "+c.getDays()+" days";
+      }
+    }
+    else{
+      s1 ="Please come after "+c.getDays()+" days";
+    }
+    System.out.println("Name: "+name+" Age: "+age+" Type: "+type+"\nVaccine name: "+c.getName()+"\n1st dose: "+s1+"\n2nd dose: "+s2);
+  }
+}
+   
+
+
+
+
+
+//Task-2
+public class NikeBD{
+  public static int count=0;
+  public static int sold=0;
+  public String name;
+  public static String [] arr1= {"Jordan", "Cortez", "Kobe"};
+  public static int [] arr2= {0,0,0};
+  public String [] products= {"Jordan", "Cortez", "Kobe"};
+  public int [] qty= {0,0,0};
+  public int soldLocal=0;
+  public NikeBD(String name){
+    this.name=name;
+    count++;
+  }
+  public static void status(){
+    System.out.print("Nike Bangladesh Status:\nBranches Opened: "+count+"\nCurrently Stocked: ");
+    for(int i=0;i<3;i++){
+      if(i!=2){
+        System.out.print(arr1[i]+": "+arr2[i]+", ");
+      }
+      else{
+         System.out.println(arr1[i]+": "+arr2[i]);
+      }
+    }
+    System.out.println("Sold: "+sold);
+  }
+  public void restockProducts(String s,int n){
+    for(int  i=0;i<3;i++){
+      if(s.equals(arr1[i])){
+        qty[i]+=n;
+        arr2[i]+=n;
+        break;
+      }
+    }
+  }
+  public void restockProducts(String [] products,int[] qty){
+     for(int  i=0;i<3;i++){
+    restockProducts(products[i],qty[i]);
+     }
+  }
+  public void details(){
+    System.out.print("Nike "+name+" outlet:\nProducts Currently Stocked: ");
+    for(int i=0;i<3;i++){
+      if(i!=2){
+        System.out.print(products[i]+": "+qty[i]+", ");
+      }
+      else{
+         System.out.println(products[i]+": "+qty[i]);
+      }
+    }
+    System.out.println("Sold: "+soldLocal);
+  }
+  public void productSold(String s,int n){
+    for(int i=0;i<3;i++){
+      if(s.equals(products[i])){
+        soldLocal+=n;
+        qty[i] -= n;
+        arr2[i] -= n;
+        sold +=n;
+        break;
+      }
+    }
+  }
+  public void productSold(String s1,int n1,String s2,int n2){
+    productSold( s1, n1);
+    productSold(s2, n2);
+  }
+}
+
+
+
+
+
+
+//Task-3
+
+
+
+
+public class Striker extends Football{
+  public int goals;
+  public int shots;
+  public Striker(String name, int age,int stamina,int  goals,int shots){
+    super(name, age,stamina);
+    this.goals=goals;
+    this.shots=shots;
+  }
+  public void display(){
+    super.display();
+    System.out.println("Goals: "+goals+"\nShots on target: "+shots);
+  }
+  public void calculatePerformance() {
+    double n=(double)goals/shots;
+  System.out.println("Performance: "+n);
+  }
+}
+
+
+
+
+public class Defender extends Football{
+  public int tackles;
+  public int interceptions;
+  public Defender(String name, int age,int stamina,int  tackles,int interceptions){
+    super(name, age,stamina);
+    this.tackles=tackles;
+    this.interceptions=interceptions;
+  }
+  public void display(){
+    super.display();
+    System.out.println("Tackles: "+tackles+"\nInterceptions: "+interceptions);
+  }
+  public void calculatePerformance() {
+    double n=(double)interceptions/tackles;
+  System.out.println("Performance: "+n);
+  }
+}
+
+
+
+
+
+
+
+
+
+public class GameStop{
+  public HandheldPC[] arr;
+  public int idx =0;
+  public int scount=0;
+  public int rcount=0;
+  public GameStop(int n){
+    arr =new HandheldPC[n];
+    System.out.println("GameStop brought "+n+" devices.");
+  }
+  public void addDevice(HandheldPC c){
+    
+    if(idx<arr.length){
+      
+      if(c instanceof SteamDeck || c instanceof ROGAlly){
+      arr[idx++] =c;
+      System.out.println(c.brand+" "+c.model+" added to shelf");
+      if(c instanceof SteamDeck){scount++;}
+      else{rcount++;}
+    }
+    else{
+      System.out.println("Invalid device type. Only SteamDeck and ROGAlly are allowed.");
+    }
+    }
+    else{
+      System.out.println("No more space on shelf for new devices.");
+    }
+    
+  }
+  public void listDevices(){
+    System.out.println("Total devices: "+idx+"\nSteam Decks: "+s.count+"\nROG Allies: "+rcount"\nDevices in store:");
+    for(int i =0;i<idx;i++){
+      System.out.println(arr[i].super.toString());
+    }
+  }
+  public void filterByOS(String s){
+    for(int i =0;i<idx;i++){
+      if(arr[i].os.equals(s)){
+      System.out.println(arr[i].super.toString());
+      }
+    }
+  }
+  
+  public void startGamingSession(HandheldPC c){
+    if(c instanceof SteamDeck){
+      System.out.println("Steam Deck ("+c.model+") booting into SteamOS.\n"+c.model+" is launching Steam Big Picture Mode.");
+      
+    }
+    else if(c instanceof ROGAlly){
+      if(c.rgb){
+      System.out.println("ROG Ally ("+c.model+") booting into Windows 11 with RGB ON\n "+c.model+" syncing RGB lights with gameplay...");
+      }
+      else{
+        System.out.println("ROG Ally ("+c.model+") booting into Windows 11 with RGB OFF\n "+c.model+" has RGB disabled");
+      }
+      
+    }
+  }
+}
+
+
+
+public class ROGAlly extends HandheldPC{
+  public boolean rgb;
+  
+  public ROGAlly(String s1, int n1,int n2,boolean b){
+    super("ASUS",s1, "Windows 11",n1,n2);
+    rbg=b;
+  }
+  public  void bootup(){
+    if(rgb){
+    System.out.println("ROG Ally ("+model+") booting into Windows 11 with RGB ON");
+    }
+    else{
+    System.out.println("ROG Ally ("+model+") booting into Windows 11 with RGB OFF");
+    }
+  }
+}
+
+
+
+
+
+public class SteamDeck extends HandheldPC{
+  
+  
+  public SteamDeck(String s1, int n1,int n2){
+    super("Valve",s1, "SteamOS",n1,n2);
+  }
+  public void bootup(){
+    System.out.println("Steam Deck ("+model+") booting into SteamOS...");
+  }
+}
+
+
+
+
+
